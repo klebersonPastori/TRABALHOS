@@ -1,4 +1,4 @@
-from cryptography.fernet import fernet
+from cryptography.fernet import Fernet
 import os
 
 def gerar_chave():
