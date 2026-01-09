@@ -1,40 +1,82 @@
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 
-import pandas as pd
+namespace ExcelSearchApp
+{
+    public class MainForm : Form
+    {
+        private TextBox txtBusca;
+        private Button btnAbrirExcel;
+        private Button btnLimparBusca;
+        private Button btnSair;
 
-caminho = input("Digite o caminho do arquivo Excel: ").strip()
+        public MainForm()
+        {
+            // Configurações da janela
+            this.Text = "App Portátil Excel";
+            this.Width = 400;
+            this.Height = 200;
+            this.StartPosition = FormStartPosition.CenterScreen;
 
-try:
-    df = pd.read_excel(caminho, engine="openpyxl")
+            // Caixa de texto
+            txtBusca = new TextBox();
+            txtBusca.Left = 20;
+            txtBusca.Top = 20;
+            txtBusca.Width = 250;
+            this.Controls.Add(txtBusca);
 
-    print("\n✅ Planilha carregada com sucesso.")
-    print("Colunas disponíveis:", df.columns.tolist())
-    print("Digite um nome para pesquisar ou 'sair' para encerrar.\n")
+            // Botão Abrir Excel
+            btnAbrirExcel = new Button();
+            btnAbrirExcel.Name = "btnAbrirExcel";
+            btnAbrirExcel.Text = "Abrir Excel";
+            btnAbrirExcel.Left = 20;
+            btnAbrirExcel.Top = 60;
+            btnAbrirExcel.Click += BtnAbrirExcel_Click;
+            this.Controls.Add(btnAbrirExcel);
 
-    if "Nome" not in df.columns:
-        print("❌ A coluna 'Nome' não foi encontrada.")
-        input("Pressione ENTER para sair...")
-        exit()
+            // Botão Limpar Busca
+            btnLimparBusca = new Button();
+            btnLimparBusca.Name = "btnLimparBusca";
+            btnLimparBusca.Text = "Limpar Busca";
+            btnLimparBusca.Left = 140;
+            btnLimparBusca.Top = 60;
+            btnLimparBusca.Click += BtnLimparBusca_Click;
+            this.Controls.Add(btnLimparBusca);
 
-    while True:
-        nome = input("Nome: ").strip()
+            // Botão Sair
+            btnSair = new Button();
+            btnSair.Name = "btnSair";
+            btnSair.Text = "Sair";
+            btnSair.Left = 260;
+            btnSair.Top = 60;
+            btnSair.Click += BtnSair_Click;
+            this.Controls.Add(btnSair);
+        }
 
-        if nome.lower() == "sair":
-            print("Encerrando programa.")
-            break
+        // Evento do botão Abrir Excel
+        private void BtnAbrirExcel_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Arquivos Excel|*.xlsx;*.xls";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    Process.Start(ofd.FileName);
+                }
+            }
+        }
 
-        resultado = df[
-            df["Nome"].astype(str).str.lower() == nome.lower()
-        ]
+        // Evento do botão Limpar Busca
+        private void BtnLimparBusca_Click(object sender, EventArgs e)
+        {
+            txtBusca.Text = string.Empty;
+        }
 
-        if resultado.empty:
-            print("❌ Pessoa não encontrada.\n")
-        else:
-            print()
-            for coluna in resultado.columns:
-                print(f"{coluna}: {resultado.iloc[0][coluna]}")
-            print()
-
-except Exception as e:
-    print("❌ Erro:", e)
-
-input("\n✅ Programa finalizado. Pressione ENTER para fechar...")
+        // Evento do botão Sair
+        private void BtnSair_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+}
